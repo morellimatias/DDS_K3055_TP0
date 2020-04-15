@@ -1,6 +1,7 @@
 package edu.utn.frba.dds.domain;
 
 import edu.utn.frba.dds.exceptions.CantidadNegativaException;
+import edu.utn.frba.dds.exceptions.ListaVaciaException;
 import edu.utn.frba.dds.exceptions.OperacionCerradaException;
 import edu.utn.frba.dds.exceptions.PrecioNegativoException;
 import org.junit.jupiter.api.Assertions;
@@ -26,9 +27,24 @@ public class TestOperacionEgreso {
         }
         catch (CantidadNegativaException exception) {
             System.out.print(exception.getMessage());
+            Assertions.fail("El test falló porque ocurrió una excepción");
         }
         catch (PrecioNegativoException exception) {
             System.out.print(exception.getMessage());
+            Assertions.fail("El test falló porque ocurrió una excepción");
+        }
+    }
+
+    @Test
+    public void calcularPrecioDeUnaOperacionSinItems(){
+        try {
+            this.operacionEgreso.vaciarListaItems();
+            this.operacionEgreso.calcularPrecio();
+            Assertions.fail("El test falló porque la operación tenía ítems cargados");
+        }
+        catch (ListaVaciaException exception) {
+            Assertions.assertEquals(ListaVaciaException.class, exception.getClass());
+
         }
     }
 
@@ -41,9 +57,11 @@ public class TestOperacionEgreso {
         }
         catch (CantidadNegativaException exception) {
             System.out.print(exception.getMessage());
+            Assertions.fail("El test falló porque ocurrió una excepción");
         }
         catch (PrecioNegativoException exception) {
             System.out.print(exception.getMessage());
+            Assertions.fail("El test falló porque ocurrió una excepción");
         }
     }
 
